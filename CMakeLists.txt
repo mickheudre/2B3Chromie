@@ -19,6 +19,9 @@ set(HEADERS
     recherche.h
     gestion_bibliotheque.h
     papiers.h
+    stb_image/stb_image.h
+    stb_image/stb_image_write.h
+
     )
 
 add_executable(2B3Chromie ${SRCS} ${HEADERS})
