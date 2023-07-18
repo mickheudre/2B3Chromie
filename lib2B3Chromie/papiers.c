@@ -6,7 +6,7 @@
 #include <string.h>
 #include "structures.h"
 #include "papiers.h"
-#include "main.h"
+#include "memoire.h"
 #include "couleurs.h"
 
 int lectureEnteteFichierPapiers()

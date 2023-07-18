@@ -3,23 +3,23 @@
 #include <ctype.h>
 #include <unistd.h>
 #include <math.h>
-#include "structures.h"
+#include "lib2B3Chromie/structures.h"
 #include "main.h"
 #include <dirent.h>
-#include "conversion.h"
-#include "couleurs.h"
-#include "recherche.h"
-#include "gestion_bibliotheque.h"
-#include "papiers.h"
+#include "lib2B3Chromie/conversion.h"
+#include "lib2B3Chromie/couleurs.h"
+#include "lib2B3Chromie/recherche.h"
+#include "lib2B3Chromie/gestion_bibliotheque.h"
+#include "lib2B3Chromie/papiers.h"
 #include <time.h>
 #include <sys/stat.h>
 #include <setjmp.h>
 #include <signal.h>
 
 #define STB_IMAGE_IMPLEMENTATION
-#include "stb_image/stb_image.h"
+#include "lib2B3Chromie/stb_image/stb_image.h"
 #define STB_IMAGE_WRITE_IMPLEMENTATION
-#include "stb_image/stb_image_write.h"
+#include "lib2B3Chromie/stb_image/stb_image_write.h"
 
 #define VERSION "2023.01.25"
 #define OS "MacOS"

@@ -7,7 +7,7 @@
 #include "structures.h"
 #include "couleurs.h"
 #include "conversion.h"
-#include "main.h"
+#include "memoire.h"
 
 int lectureEnteteFichierCouleurs()
 {

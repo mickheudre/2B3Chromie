@@ -3,7 +3,7 @@
 #include <math.h>
 #include "structures.h"
 #include "conversion.h"
-#include "main.h"
+#include "memoire.h"
 #include "recherche.h"
 
 void creationNuancier1D(const RgbColor couleurPapier,const RgbColor *couleur1,RgbColor *nuancierRgb1D)
@@ -175,6 +175,8 @@ void creationNuancier4D(const RgbColor couleurPapier,
     
 
 }
+
+
 
 void calculerFichiersImpression1D(unsigned char *img,int width,int height,ComposantesNuance1D *profil1D,ElementBibliotheque1D *bibliotheque1D,int taux_encre_max)
 {

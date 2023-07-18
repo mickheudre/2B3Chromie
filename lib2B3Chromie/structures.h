@@ -3,6 +3,14 @@
 
 // Pixel rgb 24bits
 typedef struct RgbColor RgbColor;
+
+struct ARgbColor{
+    unsigned char a; //entre 0 et 255
+    unsigned char r; //entre 0 et 255
+    unsigned char g; //entre 0 et 255
+    unsigned char b; //entre 0 et 255
+};
+
 struct RgbColor
 {
     unsigned char r; //entre 0 et 255

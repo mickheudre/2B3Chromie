@@ -51,6 +51,7 @@ int chargerProfil1D(CouleurDImpression couleurPapier,CouleurDImpression couleur1
 
 int creerProfil1D(CouleurDImpression couleurPapier,CouleurDImpression couleur1, ComposantesNuance1D *profil1D, EnteteFichierProfil *entete, RgbColor *nuancier, int *tableauDesDifferences)
 {
+
     RgbColor couleur={0,0,0};
     ComposantesNuance1D composantes1D={0};
 
@@ -75,7 +76,7 @@ int creerProfil1D(CouleurDImpression couleurPapier,CouleurDImpression couleur1, 
         
     }
     printf("\n");
-    enregistrerProfil1D(couleurPapier,couleur1,profil1D);
+    //enregistrerProfil1D(couleurPapier,couleur1,profil1D);
     
 
     return 1;
