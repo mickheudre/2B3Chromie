@@ -1,6 +1,8 @@
 #ifndef DEF_RECHERCHE
 #define DEF_RECHERCHE
 
+#define SEUIL 192
+
 //Calcul de la distance entre deux couleurs dans l'espace RGB
 int calculDistanceCouleur(RgbColor couleur1, RgbColor couleur2);
 
@@ -20,6 +22,8 @@ ComposantesNuance4D interpolation4D(const RgbColor couleur, ComposantesNuance4D 
 //puis retourne son indice dans la liste et stocke sa valeur dans la variable minimum
 //qui doit avoir été déclarée au préalable
 int rechercheMinimum(int *tableauDeFloats, int tailleTableau);
+
+int rechercheMinimumEncre(int *tableauDeFloats, int tailleTableau, int qttEncre);
 
 //pour simuler l'impression à partir des composantes en 2D et 3D
 RgbColor *simulerImpression1D(const unsigned char *composante1, const RgbColor couleurPapier, const RgbColor couleur1, const int tailleImage);

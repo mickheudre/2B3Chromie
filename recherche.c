@@ -18,6 +18,7 @@ ComposantesNuance1D rechercheNuanceProche1D(const RgbColor couleur,const RgbColo
         tableauErreur[i]=calculDistanceCouleur(nuancier1D[i],couleur);
     }
     positionMinimum=rechercheMinimum(tableauErreur,RESOLUTION);
+
     composantesTrouvees.composante1=255-positionMinimum;
    
     return composantesTrouvees;
@@ -27,7 +28,7 @@ ComposantesNuance2D rechercheNuanceProche2D(const RgbColor couleur,const RgbColo
 {
     int i=0, j=0;
     int positionMinimum=0;
-    
+    RgbColor couleurPlusProche;
     ComposantesNuance2D composantesTrouvees={0,0};
 
     for(i=0;i<RESOLUTION;i+=1)
@@ -38,6 +39,16 @@ ComposantesNuance2D rechercheNuanceProche2D(const RgbColor couleur,const RgbColo
         }
     }
     positionMinimum=rechercheMinimum(tableauErreur,RESOLUTION*RESOLUTION);
+    couleurPlusProche=nuancier2D[positionMinimum];
+    //Deuxieme recherche pour trouver la solution qui utilise le moins d'encre, proche du vrai minimum
+    for(i=0;i<RESOLUTION;i+=1)
+    {
+        for(j=0;j<RESOLUTION;j+=1)
+        {
+            tableauErreur[RESOLUTION*i+j]=calculDistanceCouleur(nuancier2D[RESOLUTION*i+j],couleurPlusProche);
+        }
+    }
+    positionMinimum=rechercheMinimumEncre(tableauErreur,RESOLUTION*RESOLUTION,positionMinimum%RESOLUTION+positionMinimum/RESOLUTION);
     composantesTrouvees.composante1=255-(positionMinimum%RESOLUTION);
     composantesTrouvees.composante2=255-(positionMinimum/RESOLUTION);
    
@@ -50,6 +61,7 @@ ComposantesNuance3D rechercheNuanceProche3D(const RgbColor couleur,
 {
     int i=0, j=0, k=0;
     int positionMinimum=0;
+    RgbColor couleurPlusProche;
     ComposantesNuance3D composantesTrouvees={0,0,0};
     
     for(i=0;i<RESOLUTION;i++)
@@ -63,6 +75,18 @@ ComposantesNuance3D rechercheNuanceProche3D(const RgbColor couleur,
         }
     }
     positionMinimum=rechercheMinimum(tableauErreur,RESOLUTION*RESOLUTION*RESOLUTION);
+    couleurPlusProche=nuancier3D[positionMinimum];
+    for(i=0;i<RESOLUTION;i++)
+    {
+        for(j=0;j<RESOLUTION;j++)
+        {
+            for(k=0;k<RESOLUTION;k++)
+            {
+                tableauErreur[i*RESOLUTION*RESOLUTION+j*RESOLUTION+k]=calculDistanceCouleur(nuancier3D[i*RESOLUTION*RESOLUTION+j*RESOLUTION+k],couleurPlusProche);
+            }
+        }
+    }
+    positionMinimum=rechercheMinimumEncre(tableauErreur,RESOLUTION*RESOLUTION*RESOLUTION,positionMinimum/(RESOLUTION*RESOLUTION)+(positionMinimum%(RESOLUTION*RESOLUTION))/RESOLUTION+(positionMinimum%(RESOLUTION*RESOLUTION))%RESOLUTION);
     composantesTrouvees.composante3=255-(positionMinimum/(RESOLUTION*RESOLUTION));
     composantesTrouvees.composante2=255-((positionMinimum%(RESOLUTION*RESOLUTION))/RESOLUTION);
     composantesTrouvees.composante1=255-((positionMinimum%(RESOLUTION*RESOLUTION))%RESOLUTION);
@@ -76,6 +100,7 @@ ComposantesNuance4D rechercheNuanceProche4D(const RgbColor couleur,
 {
     int i, j, k, l;
     int positionMinimum=0;
+    RgbColor couleurPlusProche;
     ComposantesNuance4D composantesTrouvees={0,0,0,0};
     
     for(i=0;i<RESOLUTION_DIMINUE;i++)
@@ -94,6 +119,25 @@ ComposantesNuance4D rechercheNuanceProche4D(const RgbColor couleur,
         }
     }
     positionMinimum=rechercheMinimum(tableauErreur,RESOLUTION_DIMINUE*RESOLUTION_DIMINUE*RESOLUTION_DIMINUE*RESOLUTION_DIMINUE);
+    
+    couleurPlusProche=nuancier4D[positionMinimum];
+    for(i=0;i<RESOLUTION_DIMINUE;i++)
+    {
+        for(j=0;j<RESOLUTION_DIMINUE;j++)
+        {
+            for(k=0;k<RESOLUTION_DIMINUE;k++)
+            {
+                for(l=0;l<RESOLUTION_DIMINUE;l++)
+                {
+                    tableauErreur[i*RESOLUTION_DIMINUE*RESOLUTION_DIMINUE*RESOLUTION_DIMINUE+j*RESOLUTION_DIMINUE*RESOLUTION_DIMINUE+k*RESOLUTION_DIMINUE+l]
+                            =calculDistanceCouleur(nuancier4D[i*RESOLUTION_DIMINUE*RESOLUTION_DIMINUE*RESOLUTION_DIMINUE+j*RESOLUTION_DIMINUE*RESOLUTION_DIMINUE+k*RESOLUTION_DIMINUE+l],couleurPlusProche);
+                }
+                
+            }
+        }
+    }
+    positionMinimum=rechercheMinimumEncre(tableauErreur,RESOLUTION_DIMINUE*RESOLUTION_DIMINUE*RESOLUTION_DIMINUE*RESOLUTION_DIMINUE,PAS_RESOLUTION_DIMINUE*(positionMinimum/(RESOLUTION_DIMINUE*RESOLUTION_DIMINUE*RESOLUTION_DIMINUE))+PAS_RESOLUTION_DIMINUE*((positionMinimum%(RESOLUTION_DIMINUE*RESOLUTION_DIMINUE*RESOLUTION_DIMINUE))/(RESOLUTION_DIMINUE*RESOLUTION_DIMINUE))+PAS_RESOLUTION_DIMINUE*(((positionMinimum%(RESOLUTION_DIMINUE*RESOLUTION_DIMINUE*RESOLUTION_DIMINUE))%(RESOLUTION_DIMINUE*RESOLUTION_DIMINUE))/RESOLUTION_DIMINUE)+PAS_RESOLUTION_DIMINUE*(((positionMinimum%(RESOLUTION_DIMINUE*RESOLUTION_DIMINUE*RESOLUTION_DIMINUE))%(RESOLUTION_DIMINUE*RESOLUTION_DIMINUE))%RESOLUTION_DIMINUE));
+    
     composantesTrouvees.composante4=255-PAS_RESOLUTION_DIMINUE*(positionMinimum/(RESOLUTION_DIMINUE*RESOLUTION_DIMINUE*RESOLUTION_DIMINUE));
     composantesTrouvees.composante3=255-PAS_RESOLUTION_DIMINUE*((positionMinimum%(RESOLUTION_DIMINUE*RESOLUTION_DIMINUE*RESOLUTION_DIMINUE))/(RESOLUTION_DIMINUE*RESOLUTION_DIMINUE));
     composantesTrouvees.composante2=255-PAS_RESOLUTION_DIMINUE*(((positionMinimum%(RESOLUTION_DIMINUE*RESOLUTION_DIMINUE*RESOLUTION_DIMINUE))%(RESOLUTION_DIMINUE*RESOLUTION_DIMINUE))/RESOLUTION_DIMINUE);
@@ -371,6 +415,7 @@ int rechercheMinimum(int *tableauDeFloats, int tailleTableau)
 {
     int i=0;
     int positionMinimum=0;
+
     for (i = 0; i < tailleTableau; i++)
     {
             if (tableauDeFloats[i] < tableauDeFloats[positionMinimum])
@@ -378,6 +423,34 @@ int rechercheMinimum(int *tableauDeFloats, int tailleTableau)
     }
         
     return positionMinimum;
+}
+
+int rechercheMinimumEncre(int *tableauDeFloats, int tailleTableau, int qttEncre)
+{
+    int i=0;
+    int positionPreferee=0;
+    int qttEncreI=0;
+    int qttEncreMinimum=qttEncre; //On cherche à minimser cette valeur
+
+    for (i = 0; i < tailleTableau; i++)
+    {
+            if (tableauDeFloats[i] < SEUIL){
+                if(tailleTableau==RESOLUTION)
+                    qttEncreI=i;
+                else if(tailleTableau==RESOLUTION*RESOLUTION)
+                    qttEncreI=(i/RESOLUTION)+(i%RESOLUTION);
+                else if(tailleTableau==RESOLUTION*RESOLUTION*RESOLUTION)
+                    qttEncreI=i/(RESOLUTION*RESOLUTION)+(i%(RESOLUTION*RESOLUTION))/RESOLUTION+(i%(RESOLUTION*RESOLUTION))%RESOLUTION;
+                else if(tailleTableau==RESOLUTION_DIMINUE*RESOLUTION_DIMINUE*RESOLUTION_DIMINUE*RESOLUTION_DIMINUE)
+                    qttEncreI=PAS_RESOLUTION_DIMINUE*(i/(RESOLUTION_DIMINUE*RESOLUTION_DIMINUE*RESOLUTION_DIMINUE))+PAS_RESOLUTION_DIMINUE*((i%(RESOLUTION_DIMINUE*RESOLUTION_DIMINUE*RESOLUTION_DIMINUE))/(RESOLUTION_DIMINUE*RESOLUTION_DIMINUE))+PAS_RESOLUTION_DIMINUE*(((i%(RESOLUTION_DIMINUE*RESOLUTION_DIMINUE*RESOLUTION_DIMINUE))%(RESOLUTION_DIMINUE*RESOLUTION_DIMINUE))/RESOLUTION_DIMINUE)+PAS_RESOLUTION_DIMINUE*(((i%(RESOLUTION_DIMINUE*RESOLUTION_DIMINUE*RESOLUTION_DIMINUE))%(RESOLUTION_DIMINUE*RESOLUTION_DIMINUE))%RESOLUTION_DIMINUE);
+                if (qttEncreI<qttEncreMinimum){
+                    qttEncreMinimum=qttEncreI;
+                    positionPreferee=i;
+                }
+            }
+    }       
+        
+    return positionPreferee;
 }
 
 RgbColor *simulerImpression1D(const unsigned char *composante1, const RgbColor couleurPapier, const RgbColor couleur1, const int tailleImage)
